@@ -1,4 +1,4 @@
-# SGC Control Addon
+﻿# SGC Control Addon
 
 A Forge 1.20.1 addon for **Just Stargate Mod (JSG)** that adds an SGC-inspired computer terminal for monitoring and controlling Stargates.
 
@@ -17,9 +17,9 @@ A Forge 1.20.1 addon for **Just Stargate Mod (JSG)** that adds an SGC-inspired c
 - Abort / shutdown controls
 - Energy and gate status displays
 - Incoming wormhole detection
-- Large red **OFFWORLD ACTIVATION** alert for incoming connections
+- Large red **OFFWORLD ACTIVATION** alert for genuine incoming connections
 - Incoming chevron-status boxes displayed in red
-- Persistent display of the real address currently being dialed when reopening the terminal
+- Persistent display of the real address currently being dialed after reopening the terminal
 - Placeable laptop-style control terminal with horizontal orientation
 - French and English language files
 
@@ -45,11 +45,9 @@ A Forge 1.20.1 addon for **Just Stargate Mod (JSG)** that adds an SGC-inspired c
 | `R` | Refresh the JSG link and gate data |
 | `ESC` | Leave the database / close the screen |
 
-The on-screen control keyboard also provides **LIST**, **DIAL ON/OFF**, **ALERT**, **SHUT OFF**, and **IRIS** controls.
-
 ## Building
 
-Use Java 17.
+Use Java 17:
 
 ```powershell
 $env:JAVA_HOME="C:\Program Files\Java\jdk-17"
@@ -72,9 +70,7 @@ build\libs\sgccontrol-0.5.3.jar
 
 ## Notes
 
-The addon reads the actual Stargate network provided by JSG. A local Stargate is displayed in the database but cannot dial itself. Remote destinations must exist and be registered by JSG.
-
-Incoming and outgoing connections are distinguished using JSG's real Stargate connection state, so **OFFWORLD ACTIVATION** is reserved for genuine incoming wormholes.
+The addon reads the actual Stargate network provided by JSG. Incoming and outgoing connections are distinguished using JSG's real Stargate connection state, so **OFFWORLD ACTIVATION** is reserved for genuine incoming wormholes.
 
 ## Credits / reference boundary
 

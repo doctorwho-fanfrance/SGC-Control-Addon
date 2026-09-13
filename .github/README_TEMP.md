@@ -1,1 +1,0 @@
-This temporary file will be removed by the clean source-tree commit.
