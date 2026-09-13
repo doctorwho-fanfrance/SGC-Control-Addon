@@ -1,0 +1,58 @@
+name: Publish v0.5.3 sources
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/publish-v053.yml'
+      - '.github/bootstrap/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild source payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .github/bootstrap/part_*.txt > /tmp/sgc_payload.b64
+          base64 --decode /tmp/sgc_payload.b64 > /tmp/sgc_payload.zip
+          mkdir -p /tmp/sgc_payload
+          unzip -q /tmp/sgc_payload.zip -d /tmp/sgc_payload
+          cp -a /tmp/sgc_payload/. .
+          rm -rf .github/bootstrap
+          rm -f .github/workflows/publish-v053.yml
+
+      - name: Verify project files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f build.gradle
+          test -f gradle.properties
+          test -f src/main/java/fr/doctorwho/sgccontrol/client/SgcControlScreen.java
+          test -f src/main/java/fr/doctorwho/sgccontrol/jsg/JsgBridge.java
+          test -f src/main/resources/assets/sgccontrol/textures/gui/gate_frame.png
+          grep -q 'mod_version=0.5.3' gradle.properties
+
+      - name: Publish clean source tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'doctorwho-fanfrance'
+          git config user.email 'actions@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'Nothing to commit.'
+            exit 0
+          fi
+          git commit -m 'Publish SGC Control Addon v0.5.3 sources'
+          git push origin HEAD:main
